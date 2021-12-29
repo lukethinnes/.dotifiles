@@ -6,6 +6,7 @@
 " _/ // / / / / /__| |/ / / / / / / /
 "/___/_/ /_/_/\__(_)___/_/_/ /_/ /_/
 "
+"
 " curl -fL ~/.config/nvim/autoload/plug.vim --create-dirs \
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
@@ -29,7 +30,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'wsdjeg/dein-ui.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
@@ -47,7 +47,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'reedes/vim-pencil'
 Plug 'junegunn/goyo.vim'
 Plug 'posva/vim-vue'
-Plug 'francoiscabrol/ranger.vim'
 Plug 'mileszs/ack.vim'
 Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
@@ -63,8 +62,14 @@ Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim' 
+
+Plug 'vimwiki/vimwiki'
+
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'neovim/nvim-lspconfig'
@@ -76,8 +81,16 @@ Plug 'fatih/vim-go'
 Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
 Plug 'mlaursen/vim-react-snippets'
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
+
+" startfiy
+Plug 'mhinz/vim-startify'
+
+
 call plug#end()
+
+" LEADER
+let mapleader=" "
 
 " ~THEMES AND COLORS~
 augroup colorscheme_change | au!
@@ -112,7 +125,8 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_theme='gruvbox'
 
 " GENERAL CONFIG
-let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", ".git", "node_modules", "*.vim/bundle/*"]"
+" let g:gutentags_ctags_executable = '/usr/local/Cellar/ctags/5.8_2'
+" let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", ".git", "node_modules", "*.vim/bundle/*"]"
 inoremap jj <ESC>
 inoremap jk <ESC>
 nnoremap Y y$
@@ -241,9 +255,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -301,8 +312,6 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 let g:indentLine_char = '⦙'
 
-" LEADER
-let mapleader=" "
 
 " GO
 lua <<EOF
@@ -369,7 +378,7 @@ nnoremap <leader>kvol ikvol_y
 
 " DEOPLETE
 " let g:python_host_prog = '/usr/bin/python'
-" let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'~/go/bin/gocode'
@@ -392,13 +401,6 @@ augroup END
 " STATUS LINES
 set statusline+=%#warningmsg#
 set statusline+=%*
-
-" CTRL-P
-let g:ctrlp_use_caching=0
-let g:ctrlp_custom_ignore = 'bin$\|build$\|node_modules$\|tmp$\|dist$\|.git|.bak|.swp|.pyc|.class'
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_max_files=0
-let g:ctrlp_max_height = 18
 
 " FIND AND REPLACE
 function! VisualFindAndReplace()
@@ -426,10 +428,29 @@ nnoremap <Leader>gp :Git push<CR>
 nnoremap <Leader>gm :Git merge<CR>
 
 " TELESCOPE
-nnoremap <leader>ft <cmd>Telescope find_files<cr>
+lua require('lukesvimlua.telescope')
+
+" TELESCOPE
+" search from the directory that I am in:
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" search my brain
+nnoremap <leader>fn :lua require('lukesvimlua.telescope').search_notes()<CR>
+nnoremap <leader>fs :lua require('lukesvimlua.telescope').grep_notes()<CR>
+
+" search my dotfiles
+nnoremap <leader>fdf :lua require('lukesvimlua.telescope').search_dotfiles()<CR>
+nnoremap <leader>fds :lua require('lukesvimlua.telescope').grep_dotfiles()<CR>
+
+" nnoremap <leader>fps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
+" nnoremap <C-p> :lua require('telescope.builtin').git_files()<CR>
+" nnoremap <Leader>fpf :lua require('telescope.builtin').find_files()<CR>
+" nnoremap <leader>fpw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
+" nnoremap <leader>fpb :lua require('telescope.builtin').buffers()<CR>
+" nnoremap <leader>GC :lua require('lukesvimlua.telescope').git_branches()<CR>
 
 " MAXIMIZER FOR THE DEBUGGER
 nnoremap <leader>, :MaximizerToggle!<CR>
@@ -473,7 +494,6 @@ endfunction
 " let g:vimspector_base_dir = expand('$HOME/.config/vimspector-config')
 
 "BUFFER MANAGEMENT
-nnoremap <Leader>ff :CtrlP<CR> " Find a file in the current folder recursively
 nnoremap <Leader>x :bd<CR> " Delete current buffer
 nnoremap <Leader>X :bd!<CR> " Delete current buffer
 nnoremap <Leader>n :bn!<CR> " Next buffer
