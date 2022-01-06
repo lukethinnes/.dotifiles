@@ -14,13 +14,13 @@
 filetype off		" required
 
 call plug#begin('~/.config/nvim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'branch': 'release/0.x'
   \ }
 Plug 'junegunn/fzf'
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'lotabout/skim.vim'
 Plug 'habamax/vim-gruvbit'
 Plug 'alvan/vim-closetag'
@@ -62,14 +62,11 @@ Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim' 
-
 Plug 'vimwiki/vimwiki'
-
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'neovim/nvim-lspconfig'
@@ -81,12 +78,7 @@ Plug 'fatih/vim-go'
 Plug 'nvim-treesitter/nvim-treesitter', {'branch' : '0.5-compat'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects', {'branch' : '0.5-compat'}
 Plug 'mlaursen/vim-react-snippets'
-" Plug 'ludovicchabant/vim-gutentags'
-
-" startfiy
 Plug 'mhinz/vim-startify'
-
-
 call plug#end()
 
 " LEADER
@@ -321,6 +313,7 @@ require('go').config.update_tool('quicktype', function(tool)
 	tool.pkg_mgr = 'npm'
 end)
 EOF
+
 au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
