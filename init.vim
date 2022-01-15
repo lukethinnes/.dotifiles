@@ -1,4 +1,4 @@
-"
+""
 "
 "    ____      _ __        _
 "   /  _/___  (_) /__   __(_)___ ___
@@ -21,14 +21,15 @@ Plug 'prettier/vim-prettier', {
   \ }
 Plug 'junegunn/fzf'
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-Plug 'lotabout/skim.vim'
 Plug 'habamax/vim-gruvbit'
+Plug 'habamax/vim-habanight'
 Plug 'alvan/vim-closetag'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
 Plug 'wsdjeg/dein-ui.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'joshdick/onedark.vim'
@@ -85,11 +86,22 @@ call plug#end()
 let mapleader=" "
 
 " ~THEMES AND COLORS~
+func! s:gruvbit_setup() abort
+    hi Comment gui=italic cterm=italic
+    "hi Statement gui=bold cterm=bold
+    hi VertSplit guibg=NONE ctermbg=NONE
+endfunc
+
 augroup colorscheme_change | au!
-    au ColorScheme gruvbit hi Comment gui=italic cterm=italic
-augroup END
+    au ColorScheme gruvbit call s:gruvbit_setup()
+augroup ENDaugroup END
+
 set termguicolors
 colorscheme gruvbit
+let g:gruvbit_transp_bg = v:true
+let g:gruvbit_contrast_dark = 'high'
+set background=dark
+
 " ~OLD THEME~
 " colorscheme gruvbox
 " let g:gruvbox_contrast_dark = 'medium'
