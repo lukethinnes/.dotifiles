@@ -1,4 +1,4 @@
-""
+"
 "
 "    ____      _ __        _
 "   /  _/___  (_) /__   __(_)___ ___
@@ -61,17 +61,15 @@ Plug 'Shougo/denite.nvim'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim' 
 Plug 'vimwiki/vimwiki'
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
 Plug 'gruvbox-community/gruvbox'
 Plug 'mrk21/yaml-vim'
 Plug 'crispgm/nvim-go'
@@ -102,35 +100,13 @@ let g:gruvbit_transp_bg = v:true
 let g:gruvbit_contrast_dark = 'high'
 set background=dark
 
-" ~OLD THEME~
-" colorscheme gruvbox
-" let g:gruvbox_contrast_dark = 'medium'
-" set background=dark
-
-" ONEDARK 
-" let g:onedark_hide_endofbuffer = 0
-" let g:onedark_termcolors=16
-" let g:onedark_terminal_italics = 1
-
-" " AIRLINE change theme back to 'onedark'
-" let g:airline_theme='onedark'
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline_powerline_fonts = 1
-
-" " COLORS, THESE ARE THE COLORS FOR THE OG SCHEME:
-" colorscheme onedark
-" set background=dark
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
-
-" Gruvbox stuff for tabs 
+" Gruvbit stuff for tabs 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_theme='gruvbit'
 
 " GENERAL CONFIG
-" let g:gutentags_ctags_executable = '/usr/local/Cellar/ctags/5.8_2'
-" let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", ".git", "node_modules", "*.vim/bundle/*"]"
 inoremap jj <ESC>
 inoremap jk <ESC>
 nnoremap Y y$
@@ -192,8 +168,10 @@ set ts=4 sw=4
 set path +=**
 set wildmenu
 
+" auto-format
+ source ~/.config/nvim/plug-config/lsp-config.vim
+
 " COC.NVIM
-" if hidden is not set, TextEdit might fail.
 set hidden
 
 " Some servers have issues with backup files, see #649
@@ -295,6 +273,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
+"
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
