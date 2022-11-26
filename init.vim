@@ -33,6 +33,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'wsdjeg/dein-ui.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'joshdick/onedark.vim'
+Plug 'dgraham/vim-eslint'
 Plug 'vim-airline/vim-airline'
 Plug 'wakatime/vim-wakatime'
 Plug 'vim-airline/vim-airline-themes'
@@ -138,7 +139,7 @@ set showcmd
 set tabstop=2
 set expandtab
 set autoindent smartindent
-set softtabstop=2
+set softtabstop=2 expandtab
 set shiftwidth=2
 set nobackup
 set noswapfile
@@ -169,7 +170,7 @@ set path +=**
 set wildmenu
 
 " auto-format
- source ~/.config/nvim/plug-config/lsp-config.vim
+source ~/.config/nvim/plug-config/lsp-config.vim
 
 " COC.NVIM
 set hidden
@@ -273,7 +274,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
-"
+
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
@@ -290,11 +291,18 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Indent without leaving normal mode
 
 " VIM-YAML
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 let g:indentLine_char = '⦙'
 
+" PYTHON
+
+au FileType py set noexpandtab
+au FileType py set shiftwidth=2
+au FileType py set softtabstop=2
+au FileType py set tabstop=2
 
 " GO
 lua <<EOF
@@ -347,6 +355,7 @@ let g:UltiSnipsSnippetDirectories=[$HOME.'/general/path/of/snippets/']
 
 " PRETTIER 
 let g:prettier#autoformat_require_pragma = 0
+let g:prettier#config#use_tabs = 'false'
 
 "REMAPPED SNIPPETS, TO SEE THEM TYPE :Ultisnips edit, FOR THAT FILE TYPE 
 nnoremap <leader>! ihb_t!
@@ -377,9 +386,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:pencil#wrapModeDefault = 'soft'
 let g:pencil#textwidth = 84
 augroup pencil
-    autocmd!
-    autocmd FileType markdown,mkd,md call pencil#init()
-    autocmd FileType text call pencil#init({'wrap': 'hard'})
+autocmd!
+autocmd FileType markdown,mkd,md call pencil#init()
+autocmd FileType text call pencil#init({'wrap': 'hard'})
 augroup END
 
 " STATUS LINES
@@ -497,7 +506,8 @@ nnoremap <C-H> <C-W><C-H>
 " NEWLINE GENERATION
 nmap <C-o> O<Esc>
 nmap <CR> o<Esc>
-
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
 nnoremap <Leader>. @: " Repeat last ex command
 nnoremap <Leader>r :set relativenumber!<CR> " Toggle relative line numbers
 
